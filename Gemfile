@@ -49,6 +49,14 @@ group :development, :test do
   gem 'debug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'faker'
   gem 'rspec', '~> 3.13'
+
+  gem "rspec-expectations", "~> 3.13"
+  gem "rspec-instafail", "~> 1.0"
+  gem "rspec-rails", "~> 6.1"
+
+  gem "database_cleaner", "~> 2.0"
+  gem "shoulda-callback-matchers", "~> 1.1"
+  gem "shoulda-matchers", "~> 6.1"
 end
 
 group :development do
@@ -58,3 +66,6 @@ group :development do
   gem 'rubocop-rails', '~> 2.23'
   gem 'rubocop-rspec', '~> 2.26'
 end
+
+
+gem "awesome_print", "~> 1.9"

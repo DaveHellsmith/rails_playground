@@ -67,6 +67,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     ast (2.4.2)
+    awesome_print (1.9.2)
     bindex (0.8.1)
     bootsnap (1.17.1)
       msgpack (~> 1.2)
@@ -75,6 +76,12 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.4.0)
       railties (>= 6.0.0)
+    database_cleaner (2.0.2)
+      database_cleaner-active_record (>= 2, < 3)
+    database_cleaner-active_record (2.1.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.3.4)
     debug (1.9.1)
       irb (~> 1.10)
@@ -184,9 +191,19 @@ GEM
     rspec-expectations (3.13.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
+    rspec-instafail (1.0.0)
+      rspec
     rspec-mocks (3.13.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
+    rspec-rails (6.1.1)
+      actionpack (>= 6.1)
+      activesupport (>= 6.1)
+      railties (>= 6.1)
+      rspec-core (~> 3.12)
+      rspec-expectations (~> 3.12)
+      rspec-mocks (~> 3.12)
+      rspec-support (~> 3.12)
     rspec-support (3.13.0)
     rubocop (1.60.2)
       json (~> 2.3)
@@ -215,6 +232,10 @@ GEM
       rubocop-capybara (~> 2.17)
       rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
+    shoulda-callback-matchers (1.1.4)
+      activesupport (>= 3)
+    shoulda-matchers (6.1.0)
+      activesupport (>= 5.2.0)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -249,8 +270,10 @@ PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
+  awesome_print (~> 1.9)
   bootsnap
   cssbundling-rails
+  database_cleaner (~> 2.0)
   debug
   faker
   jbuilder
@@ -260,9 +283,14 @@ DEPENDENCIES
   rails (~> 7.0.8)
   redis (~> 4.0)
   rspec (~> 3.13)
+  rspec-expectations (~> 3.13)
+  rspec-instafail (~> 1.0)
+  rspec-rails (~> 6.1)
   rubocop (~> 1.60)
   rubocop-rails (~> 2.23)
   rubocop-rspec (~> 2.26)
+  shoulda-callback-matchers (~> 1.1)
+  shoulda-matchers (~> 6.1)
   sprockets-rails
   stimulus-rails
   turbo-rails
