@@ -243,7 +243,7 @@ describe Api::V1::CompaniesController do
       end
     end
 
-    context 'when the minimal deal amount is passed' do
+    context 'when the minimal deal amount sum is passed' do
       let!(:first_company_deal_amounts) do
         [
           1000,
@@ -254,59 +254,14 @@ describe Api::V1::CompaniesController do
       let!(:second_company_deal_amounts) do
         [
           500,
-          30,
+          500,
           2000,
         ] 
       end
 
       let(:deal_amount) do
-        2000
+        3000
       end
-
-
-      let(:first_expected_result) do
-            deal = first_company_deals.last
-
-            hash_including(
-              {
-                'id' => first_company.id,
-                'name' => first_company_name,
-                'industry' => first_company_industry,
-                'employee_count' => first_company_employee_count,
-                'deals' => [
-                  hash_including(
-                    'id' => deal.id,
-                    'name' => deal.name,
-                    'status' => deal.status,
-                    'amount' => deal.amount,
-                    'company_id' => first_company.id
-                  )
-                ]
-              }
-            )
-          end
-
-          let(:second_expected_result) do
-            deal = second_company_deals.last
-
-            hash_including(
-              {
-                'id' => second_company.id,
-                'name' => second_company_name,
-                'industry' => second_company_industry,
-                'employee_count' => second_company_employee_count,
-                'deals' => [
-                  hash_including(
-                    'id' => deal.id,
-                    'name' => deal.name,
-                    'status' => deal.status,
-                    'amount' => deal.amount,
-                    'company_id' => second_company.id
-                  )
-                ]
-              }
-            )
-          end
 
       include_examples 'has successful response'
 
@@ -314,8 +269,14 @@ describe Api::V1::CompaniesController do
         expect(parsed_response).to include(first_expected_result, second_expected_result)
       end
 
-      it 'does not return the unmatched deals' do
-        expect(parsed_response.first['deals'].length).to eq(1)
+      context 'and there are no matches' do
+        let(:deal_amount) do
+          4000
+        end
+        
+        it 'returns the companies and the matching deals' do
+          expect(parsed_response).to eq([])
+        end
       end
     end
   end
