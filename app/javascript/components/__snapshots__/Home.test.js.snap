@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home renders correctly 1`] = `
+<div
+  className="vw-100 primary-color d-flex align-items-center justify-content-center"
+>
+  <div
+    className="jumbotron jumbotron-fluid bg-transparent"
+  >
+    <div
+      className="container secondary-color"
+    >
+      <h1
+        className="display-4"
+      >
+        Companies
+      </h1>
+      <label
+        htmlFor="company-name"
+      >
+        Company Name
+      </label>
+      <div
+        className="input-group mb-3"
+      >
+        <input
+          className="form-control"
+          id="company-name"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+      <label
+        htmlFor="industry"
+      >
+        Industry
+      </label>
+      <div
+        className="input-group mb-3"
+      >
+        <input
+          className="form-control"
+          id="industry"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+      <label
+        htmlFor="min-employee"
+      >
+        Minimum Employee Count
+      </label>
+      <div
+        className="input-group mb-3"
+      >
+        <input
+          className="form-control"
+          id="min-employee"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+      <label
+        htmlFor="min-amount"
+      >
+        Minimum Deal Amount
+      </label>
+      <div
+        className="input-group mb-3"
+      >
+        <input
+          className="form-control"
+          id="min-amount"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+      <table
+        className="table"
+      >
+        <thead>
+          <tr>
+            <th
+              scope="col"
+            >
+              Name
+            </th>
+            <th
+              scope="col"
+            >
+              Industry
+            </th>
+            <th
+              scope="col"
+            >
+              Employee Count
+            </th>
+            <th
+              scope="col"
+            >
+              Total Deal Amount
+            </th>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+    </div>
+  </div>
+</div>
+`;
