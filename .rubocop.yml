@@ -1,0 +1,58 @@
+require:
+  - rubocop-rspec
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 3.2.2 
+  NewCops: enable
+
+Rails:
+  Enabled: true
+
+Layout/LineLength:
+  Max: 120
+
+Metrics/BlockLength:
+  Exclude:
+    - '**/*.gemspec'
+    - '**/routes.rb'
+    - '**/spec/**/*'
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Style/WordArray:
+  EnforcedStyle: brackets
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+RSpec/MessageSpies:
+  EnforcedStyle: have_received
+
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 20
+
+RSpec/LetSetup:
+  Enabled: false
+
+RSpec/OverwritingSetup:
+  Enabled: false

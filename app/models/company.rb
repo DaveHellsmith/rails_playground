@@ -1,3 +1,3 @@
 class Company < ApplicationRecord
-  has_many :deals
+  has_many :deals, dependent: :restrict_with_exception
 end

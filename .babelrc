@@ -1,0 +1,7 @@
+{
+"presets": ["@babel/env", "@babel/react"],
+"plugins": [
+    "syntax-dynamic-import",
+    ["transform-class-properties", { "spec": true }]
+  ]
+}
