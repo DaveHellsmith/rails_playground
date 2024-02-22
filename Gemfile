@@ -69,3 +69,5 @@ end
 
 
 gem "awesome_print", "~> 1.9"
+
+gem "pry", "~> 0.14.2"
