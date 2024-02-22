@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { useDebounce } from "@uidotdev/usehooks";
 
 export default () => {
   // List of fetched companies
@@ -7,18 +8,32 @@ export default () => {
   // Table filters
   const [companyName, setCompanyName] = useState("");
   const [industry, setIndustry] = useState("");
-  const [minEmployee, setMinEmployee] = useState("");
-  const [minimumDealAmount, setMinimumDealAmount] = useState("");
+  const [minEmployee, setMinEmployee] = useState(0);
+  const [minimumDealAmount, setMinimumDealAmount] = useState(0);
+
+  const searchQuery = useMemo(() => {
+    const params = new URLSearchParams({
+      name: companyName,
+      industry,
+      employeeCount: minEmployee,
+      dealAmount: minimumDealAmount,
+    });
+
+    const url = `/api/v1/companies?${params.toString()}`;
+
+    return url;
+  }, [companyName, industry, minEmployee, minimumDealAmount]);
+
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   // Fetch companies from API
   useEffect(() => {
-    const url = "/api/v1/companies";
-    fetch(url)
+    fetch(debouncedSearchQuery)
       .then((res) => {
         return res.json();
       })
       .then((res) => setCompanies(res))
-  }, [])
+  }, [debouncedSearchQuery])
 
   return (
     <div className="vw-100 primary-color d-flex align-items-center justify-content-center">
@@ -38,12 +53,12 @@ export default () => {
 
           <label htmlFor="min-employee">Minimum Employee Count</label>
           <div className="input-group mb-3">
-            <input type="text" className="form-control" id="min-employee" value={minEmployee} onChange={e => setMinEmployee(e.target.value)} />
+            <input type="number" className="form-control" id="min-employee" value={minEmployee} onChange={e => setMinEmployee(e.target.value)} />
           </div>
 
           <label htmlFor="min-amount">Minimum Deal Amount</label>
           <div className="input-group mb-3">
-            <input type="text" className="form-control" id="min-amount" value={minimumDealAmount} onChange={e => setMinimumDealAmount(e.target.value)} />
+            <input type="number" className="form-control" id="min-amount" value={minimumDealAmount} onChange={e => setMinimumDealAmount(e.target.value)} />
           </div>
 
           <table className="table">

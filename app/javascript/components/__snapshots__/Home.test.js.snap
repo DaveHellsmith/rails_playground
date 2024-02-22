@@ -59,8 +59,8 @@ exports[`Home renders correctly 1`] = `
           className="form-control"
           id="min-employee"
           onChange={[Function]}
-          type="text"
-          value=""
+          type="number"
+          value={0}
         />
       </div>
       <label
@@ -75,8 +75,8 @@ exports[`Home renders correctly 1`] = `
           className="form-control"
           id="min-amount"
           onChange={[Function]}
-          type="text"
-          value=""
+          type="number"
+          value={0}
         />
       </div>
       <table
