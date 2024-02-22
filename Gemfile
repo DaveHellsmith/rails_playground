@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.2.2'
 
 # Pretty print your Ruby objects with style -- in full color and with proper indentation
-gem "awesome_print", "~> 1.9" 
+gem 'awesome_print', '~> 1.9'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.8'
@@ -53,15 +53,15 @@ group :development, :test do
   gem 'faker'
   gem 'rspec', '~> 3.13'
 
-  gem "rspec-expectations", "~> 3.13"
-  gem "rspec-instafail", "~> 1.0"
-  gem "rspec-rails", "~> 6.1"
+  gem 'rspec-expectations', '~> 3.13'
+  gem 'rspec-instafail', '~> 1.0'
+  gem 'rspec-rails', '~> 6.1'
 
-  gem "database_cleaner", "~> 2.0"
-  gem "shoulda-callback-matchers", "~> 1.1"
-  gem "shoulda-matchers", "~> 6.1"
+  gem 'database_cleaner', '~> 2.0'
+  gem 'shoulda-callback-matchers', '~> 1.1'
+  gem 'shoulda-matchers', '~> 6.1'
 
-  gem "pry", "~> 0.14.2"
+  gem 'pry', '~> 0.14.2'
 end
 
 group :development do
@@ -71,6 +71,5 @@ group :development do
   gem 'rubocop-rails', '~> 2.23'
   gem 'rubocop-rspec', '~> 2.26'
 
-  gem "bundler-audit", "~> 0.9.1"
+  gem 'bundler-audit', '~> 0.9.1'
 end
-

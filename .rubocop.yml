@@ -48,3 +48,11 @@ RSpec/MessageSpies:
 Metrics/ParameterLists:
   CountKeywordArgs: false
 
+RSpec/MultipleMemoizedHelpers:
+  Max: 20
+
+RSpec/LetSetup:
+  Enabled: false
+
+RSpec/OverwritingSetup:
+  Enabled: false

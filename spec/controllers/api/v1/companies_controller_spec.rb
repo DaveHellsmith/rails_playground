@@ -1,7 +1,64 @@
 require 'rails_helper'
 
 describe Api::V1::CompaniesController do
-  let(:parsed_response) { JSON.parse response.body }
+  let(:parsed_response) { response.parsed_body }
+  let(:first_company_name) { Faker::Company.name }
+  let(:second_company_name) { Faker::Company.name }
+  let(:first_company_industry) { Faker::Company.industry }
+  let(:second_company_industry) { Faker::Company.industry }
+  let(:first_company_employee_count) { rand(10..1000) }
+  let(:second_company_employee_count) { rand(10..1000) }
+  let(:first_company) do
+    Company.create(
+      name: first_company_name,
+      industry: first_company_industry,
+      employee_count: first_company_employee_count,
+    )
+  end
+  let(:second_company) do
+    Company.create(
+      name: second_company_name,
+      industry: second_company_industry,
+      employee_count: second_company_employee_count,
+    )
+  end
+  let!(:first_company_deal_amounts) do
+    [
+      rand(10..1000),
+      rand(10..1000),
+    ]
+  end
+  let!(:first_company_deals) do
+    statuses = ['pending', 'won', 'lost']
+
+    first_company_deal_amounts.map do |amount, i|
+      Deal.create(
+        name: "Deal #{i}",
+        status: statuses.sample,
+        amount:,
+        company_id: first_company.id,
+      )
+    end
+  end
+  let!(:second_company_deal_amounts) do
+    [
+      rand(10..1000),
+      rand(10..1000),
+      rand(10..1000),
+    ]
+  end
+  let!(:second_company_deals) do
+    statuses = ['pending', 'won', 'lost']
+
+    second_company_deal_amounts.map do |amount, i|
+      Deal.create(
+        name: "Deal #{i}",
+        status: statuses.sample,
+        amount:,
+        company_id: second_company.id,
+      )
+    end
+  end
 
   shared_examples 'has successful response' do
     it { is_expected.to have_http_status :ok }
@@ -13,80 +70,8 @@ describe Api::V1::CompaniesController do
     end
   end
 
-  let(:first_company_name) {Faker::Company.name}
-  let(:second_company_name) {Faker::Company.name}
-
-  let(:first_company_industry) {Faker::Company.industry}
-  let(:second_company_industry) {Faker::Company.industry}
-
-  let(:first_company_employee_count) {rand(10..1000)}
-  let(:second_company_employee_count) {rand(10..1000)}
-
-  let(:first_company) do
-    Company.create(
-      name: first_company_name,
-      industry: first_company_industry,
-      employee_count: first_company_employee_count,
-    )
-  end
-
-  let(:second_company) do
-    Company.create(
-      name: second_company_name,
-      industry: second_company_industry,
-      employee_count: second_company_employee_count,
-    )
-  end
-
-  let!(:first_company_deal_amounts) do
-    [
-      rand(10..1000),
-      rand(10..1000)
-    ] 
-  end
-
-  let!(:first_company_deals) do
-    statuses = ['pending', 'won', 'lost']
-
-    first_company_deal_amounts.map do |amount, i|
-      Deal.create(
-        name: "Deal #{i}",
-        status: statuses.sample,
-        amount: amount,
-        company_id: first_company.id,
-      )
-    end
-  end
-
-  let!(:second_company_deal_amounts) do
-    [
-      rand(10..1000),
-      rand(10..1000),
-      rand(10..1000)
-    ] 
-  end
-
-  let!(:second_company_deals) do
-    statuses = ['pending', 'won', 'lost']
-
-    second_company_deal_amounts.map do |amount, i|
-      Deal.create(
-        name: "Deal #{i}",
-        status: statuses.sample,
-        amount: amount,
-        company_id: second_company.id,
-      )
-    end
-  end
-
   describe 'GET index' do
-    subject(:request) { get :index, params: params }
-
-    let(:params) {}
-
-    before do
-      subject
-    end
+    subject(:request) { get :index, params: }
 
     let(:first_expected_result) do
       hash_including(
@@ -95,19 +80,18 @@ describe Api::V1::CompaniesController do
           'name' => first_company_name,
           'industry' => first_company_industry,
           'employee_count' => first_company_employee_count,
-          'deals' => first_company_deals.map do |deal| 
+          'deals' => first_company_deals.map do |deal|
             hash_including(
               'id' => deal.id,
               'name' => deal.name,
               'status' => deal.status,
               'amount' => deal.amount,
-              'company_id' => first_company.id
+              'company_id' => first_company.id,
             )
-          end
-        }
+          end,
+        },
       )
     end
-
     let(:second_expected_result) do
       hash_including(
         {
@@ -115,32 +99,33 @@ describe Api::V1::CompaniesController do
           'name' => second_company_name,
           'industry' => second_company_industry,
           'employee_count' => second_company_employee_count,
-          'deals' => second_company_deals.map do |deal| 
+          'deals' => second_company_deals.map do |deal|
             hash_including(
               'id' => deal.id,
               'name' => deal.name,
               'status' => deal.status,
               'amount' => deal.amount,
-              'company_id' => second_company.id
+              'company_id' => second_company.id,
             )
-          end
-        }
+          end,
+        },
       )
     end
-
-    
     let(:name) { nil }
     let(:industry) { nil }
     let(:employee_count) { nil }
     let(:deal_amount) { nil }
-    
-    let(:params) do 
+    let(:params) do
       {
-        name: name,
-        industry: industry,
-        employee_count: employee_count,
-        deal_amount: deal_amount,
+        name:,
+        industry:,
+        employee_count:,
+        deal_amount:,
       }
+    end
+
+    before do
+      request
     end
 
     context 'when none of the filter parameters are passed' do
@@ -217,13 +202,18 @@ describe Api::V1::CompaniesController do
       it 'returns all the matching companies' do
         expect(parsed_response).to include(first_expected_result, second_expected_result)
       end
+    end
 
-      context 'and none of them matches' do
-        let(:employee_count) { 100 }
-        
-        it 'returns an empty list' do
-          expect(parsed_response).to match([])
-        end
+    context 'when the employee count is passed and none of them match' do
+      let(:first_company_employee_count) { 10 }
+      let(:second_company_employee_count) { 50 }
+      let(:employee_count) { 1 }
+      let(:employee_count) { 100 }
+
+      include_examples 'has successful response'
+
+      it 'returns an empty list' do
+        expect(parsed_response).to match([])
       end
     end
 
@@ -248,7 +238,7 @@ describe Api::V1::CompaniesController do
         [
           1000,
           2000,
-        ] 
+        ]
       end
 
       let!(:second_company_deal_amounts) do
@@ -256,7 +246,7 @@ describe Api::V1::CompaniesController do
           500,
           500,
           2000,
-        ] 
+        ]
       end
 
       let(:deal_amount) do
@@ -268,15 +258,32 @@ describe Api::V1::CompaniesController do
       it 'returns the companies and the matching deals' do
         expect(parsed_response).to include(first_expected_result, second_expected_result)
       end
+    end
 
-      context 'and there are no matches' do
-        let(:deal_amount) do
-          4000
-        end
-        
-        it 'returns the companies and the matching deals' do
-          expect(parsed_response).to eq([])
-        end
+    context 'when the minimal deal amount sum is passed and there are no matches' do
+      let!(:first_company_deal_amounts) do
+        [
+          1000,
+          2000,
+        ]
+      end
+
+      let!(:second_company_deal_amounts) do
+        [
+          500,
+          500,
+          2000,
+        ]
+      end
+
+      let(:deal_amount) do
+        4000
+      end
+
+      include_examples 'has successful response'
+
+      it 'returns the companies and the matching deals' do
+        expect(parsed_response).to eq([])
       end
     end
   end

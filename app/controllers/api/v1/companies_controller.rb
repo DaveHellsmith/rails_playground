@@ -4,8 +4,8 @@ class Api::V1::CompaniesController < ApplicationController
       name: params[:name],
       industry: params[:industry],
       min_employee_count: params[:employee_count],
-      min_deal_amount_sum: params[:deal_amount]
-    ).call(params)
+      min_deal_amount_sum: params[:deal_amount],
+    ).call
 
     render json: companies
   end
