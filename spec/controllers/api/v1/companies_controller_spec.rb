@@ -234,7 +234,7 @@ describe Api::V1::CompaniesController do
 
       include_examples 'has successful response'
 
-      it 'returns the matching company' do
+      it 'returns the matching company azaza' do
         expect(parsed_response).to include(second_expected_result)
       end
 
